@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problem Counter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .counter {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        .timer {
+            font-size: 20px;
+            color: red;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Problem Solving Tracker</h1>
+    <p class="timer">Time Left: <span id="timer">--:--:--</span></p>
+    <p class="counter">Solved: <span id="solved">0</span> / 44</p>
+    <button onclick="incrementCounter()">Mark as Solved</button>
+    <button onclick="resetCounter()">Reset</button>
+
+    <script>
+        let solvedCount = 0;
+        const totalProblems = 44;
+        const deadline = new Date();
+        deadline.setHours(17, 0, 0); // Set deadline to 5 PM today
+
+        function updateTimer() {
+            const now = new Date();
+            const timeLeft = deadline - now;
+            if (timeLeft <= 0) {
+                document.getElementById('timer').textContent = "Time's up!";
+                return;
+            }
+            const hours = Math.floor((timeLeft / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((timeLeft / (1000 * 60)) % 60);
+            const seconds = Math.floor((timeLeft / 1000) % 60);
+            document.getElementById('timer').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        function incrementCounter() {
+            if (solvedCount < totalProblems) {
+                solvedCount++;
+                document.getElementById('solved').textContent = solvedCount;
+            }
+        }
+
+        function resetCounter() {
+            solvedCount = 0;
+            document.getElementById('solved').textContent = solvedCount;
+        }
+    </script>
+</body>
+</html>
